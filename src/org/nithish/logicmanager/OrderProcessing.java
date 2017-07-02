@@ -63,7 +63,7 @@ public class OrderProcessing {
 				totalBill = totalBill + econCars.economyCarsBill(new Date(orderDate), dto.getEconomyCarsOrder());
 			}
 			if (dto.getSuvOrder() > 0) {
-				SUVCars suvCars = new SUVCars();
+				SuvCars suvCars = new SuvCars();
 				totalBill = totalBill + suvCars.suvCarsBill(new Date(orderDate), dto.getSuvOrder(), dto.isOffRoad());
 			}
 			if (dto.getLuxuryCarsOrder() > 0) {

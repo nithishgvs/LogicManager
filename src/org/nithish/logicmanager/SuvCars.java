@@ -7,7 +7,7 @@ import java.util.Date;
  * @author nithishgvs
  *
  */
-public class SUVCars extends BillingBaseClass {
+public class SuvCars extends BillingBaseClass {
 
 	/**
 	 * This method calculates Bill for SUV's.This calls super class method
