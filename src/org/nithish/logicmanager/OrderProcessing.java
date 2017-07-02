@@ -79,7 +79,6 @@ public class OrderProcessing {
 	}
 
 	public static void main(String args[]) throws ParseException, DateException {
-		Date day = new Date("2016/06/29");
 		OrderDetailsDTO order1 = new OrderDetailsDTO();
 		Date date = new Date("08/06/2018");
 		// String dateOrder = dateFormatter(date);
