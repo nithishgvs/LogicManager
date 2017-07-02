@@ -56,7 +56,7 @@ public class BillingBaseClass {
 
 	/**
 	 * This method calculates Bill for Luxury Cars.This calls method
-	 * baseCarsBill from BillingBaseClass and adds extra Insurance fee based n
+	 * baseCarsBill from BillingBaseClass and adds extra Insurance fee based on
 	 * age
 	 * 
 	 * @param date

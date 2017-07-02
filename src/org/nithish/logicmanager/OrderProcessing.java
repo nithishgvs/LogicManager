@@ -2,28 +2,47 @@ package org.nithish.logicmanager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 
+ * @author nithishgvs
+ *
+ */
 public class OrderProcessing {
 
+	/**
+	 * Api method to check if user puts valid date for the order
+	 * 
+	 * @param orderDate
+	 * @throws ParseException
+	 * @throws DateException
+	 */
 	public void vaildDateReceived(String orderDate) throws ParseException, DateException {
 		Date currentDate = new Date();
 
 		try {
-			Date start = dateFormatter(currentDate.toString());
-			Date end = dateFormatter(orderDate);
+			Date start = dateFormatterCurrentDate(currentDate.toString());
+			Date end = dateFormatterInputDate(orderDate);
 			if (start.compareTo(end) > 0) {
 				throw new DateException("Order Date:" + orderDate);
 			}
-		} catch (DateException e) {
-			System.out.println("Order cant proceed.Please select a valid Date, " + e.getMessage());
+		} catch (DateException ex) {
+			System.out.println("Order cant proceed.Please select a valid Date, " + ex.getMessage());
 			System.exit(0);
 		}
 
 	}
 
+	/**
+	 * Processing method which takes list of orders from Customer and generates
+	 * the bill
+	 * 
+	 * @param ordersDTO
+	 * @throws ParseException
+	 * @throws DateException
+	 */
 	@SuppressWarnings("deprecation")
 	public void prepareBillForOrder(List<OrderDetailsDTO> ordersDTO) throws ParseException, DateException {
 		float totalBill = 0;
@@ -31,7 +50,7 @@ public class OrderProcessing {
 			String orderDate = dto.getOrderDate();
 			if (orderDate != null) {
 				vaildDateReceived(orderDate);
-			}else{
+			} else {
 				System.out.println("Order can't be processed without Date.");
 				System.exit(0);
 			}
@@ -75,40 +94,37 @@ public class OrderProcessing {
 				totalBill = totalBill + jetskies.jetSkiesBill(dto.getJetSkiesOrderHours(), dto.getJetskisOrder());
 			}
 		}
-		System.out.println("TotalBill:" + totalBill);
-	}
-
-	public static void main(String args[]) throws ParseException, DateException {
-		OrderDetailsDTO order1 = new OrderDetailsDTO();
-		Date date = new Date("08/06/2018");
-		// String dateOrder = dateFormatter(date);
-		order1.setOrderDate(date.toString());
-		order1.setBicycleOrder(2);
-		order1.setEconomyCarsOrder(2);
-		order1.setJetskisOrder(3);
-		order1.setLimousineOrder(3);
-		order1.setLuxuryCarsOrder(3);
-		order1.setMidSizeCarsOrder(3);
-		order1.setMotorCycleOrder(5);
-		order1.setScooterOrder(4);
-		order1.setSuvOrder(4);
-		order1.setAge(55);
-		order1.setPremium(true);
-		order1.setOffRoad(true);
-		order1.setJetSkiesOrderHours(20);
-		List<OrderDetailsDTO> orders = new ArrayList<>();
-		orders.add(order1);
-		orders.add(order1);
-		OrderProcessing or = new OrderProcessing();
-		or.prepareBillForOrder(orders);
-
+		System.out.print("Total Bill for your Order: $");
+		System.out.printf("%.2f", totalBill);
 	}
 
 	@SuppressWarnings({ "unused", "deprecation" })
-	private static Date dateFormatter(String date) throws ParseException {
+	/**
+	 * Method to format Dates received from the order
+	 * 
+	 * @param date
+	 * @return
+	 * @throws ParseException
+	 */
+	private Date dateFormatterCurrentDate(String date) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy");
 		Date currentdate = sdf.parse(date);
-		SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd,yyyy");
+		return new Date(sdf2.format(currentdate));
+	}
+
+	@SuppressWarnings({ "unused", "deprecation" })
+	/**
+	 * Method to format Dates received from the order
+	 * 
+	 * @param date
+	 * @return
+	 * @throws ParseException
+	 */
+	private Date dateFormatterInputDate(String date) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date currentdate = sdf.parse(date);
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd,yyyy");
 		return new Date(sdf2.format(currentdate));
 	}
 
